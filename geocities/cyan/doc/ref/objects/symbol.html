@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>シンボル</title>
+</head>
+<body>
+
+<h1>シンボル</h1>
+<p>
+foo や bar などの識別子を表すオブジェクトです。
+評価すると、自身に代入されたオブジェクトを返します。
+プログラム中で得るには、'sym のようにクオートを使います。
+</p>
+<p>
+先頭には文字かアンダーバーが使え、以降はそれに加えて数字が使用可能です。
+even? や push! のように、末尾には ? か ! をつけることができます。
+これにより、手続きが真偽値を返すことや、破壊的な操作を伴うことを表せます。
+</p>
+<p>
+通常、同じ名前をもつシンボルは、同一のオブジェクトです。
+</p>
+
+<h2>ペアレント</h2>
+Symbol
+
+<h2>メソッド</h2>
+<dl>
+  <dt>(=)(value)
+  <dd>self に value を代入します。
+  <dt>(:=)(value)
+  <dd>self に value を代入します。スコープはブロックローカルになります。
+  <dt>generate()
+  <dd>ユニークなシンボルを返します。シンボルは intern されないため、
+      他のどのシンボルとも同一ではありません。
+</dl>
+<p>
+その他のメソッドの定義は、初期化ファイル群の中の symbol.cy にあります。
+</p>
+
+</body>
+</html>
+

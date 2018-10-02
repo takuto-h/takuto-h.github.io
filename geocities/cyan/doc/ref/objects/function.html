@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>関数</title>
+</head>
+<body>
+
+<h1>関数</h1>
+<p>
+^(x, y){ x + y } のように記述する、関数オブジェクトです。
+評価すると、仮引数とブロックを評価した新しい関数を返します。
+</p>
+<p>
+上の例の場合、
+スロット params に $(x, y) が、スロット body に { x + y } がセットされます。
+</p>
+<p>
+^(){ .. } のように、仮引数が０個の場合、
+^{ .. } というように括弧の省略ができます。
+また、関数には、ブロックを記述するのに便利な構文があります。
+詳しくは、<a href="../indent-block.html">インデントブロック</a>
+の項を見てください。
+</p>
+
+<h2>ペアレント</h2>
+Function
+
+<h2>スロット</h2>
+<dl>
+  <dt>params
+  <dd>仮引数です。
+  <dt>body
+  <dd>関数が呼び出されたときに実行されるブロックです。
+</dl>
+
+</body>
+</html>
+

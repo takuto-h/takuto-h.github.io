@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>仮引数</title>
+</head>
+<body>
+
+<h1>仮引数</h1>
+<p>
+$(a, &opt b, c = 1, &rest d, &key e, f = 2, &miss g, &args h) のように記述する、
+仮引数として用いるオブジェクトです。評価すると、自身を返します。
+</p>
+<p>
+上の例の場合、スロット required に [a] が、
+スロット optional に [[b | []], [c | 1]] が、スロット rest に d が、
+スロット keyword に %{ e => [], f => 2 } が、スロット missing に g が、
+スロット args に h がセットされます。
+</p>
+
+<h2>ペアレント</h2>
+Parameters
+
+<h2>スロット</h2>
+<dl>
+  <dt>required
+  <dd>仮引数のリストです。引数は必ず与えられなくてはなりません。
+  <dt>optional
+  <dd>仮引数を表す連想リストです。引数は省略が可能です。
+  <dt>rest
+  <dd>仮引数です。余った引数がリストとして代入されます。
+  <dt>keyword
+  <dd>キーワード仮引数を表すハッシュです。キーワード引数は省略が可能です。
+  <dt>missing
+  <dd>仮引数です。余ったキーワード引数がハッシュとして代入されます。
+  <dt>args
+  <dd>仮引数です。余った引数が引数の形で代入されます。
+</dl>
+
+<h2>メソッド</h2>
+<dl>
+  <dt>(=)(value)
+  <dd>self のそれぞれの要素に value の要素を引数としてメッセージ (=) を送ります。
+  <dt>(:=)(value)
+  <dd>self のそれぞれの要素に value の要素を引数としてメッセージ (:=) を送ります。
+  <dt>(+=)(value)
+  <dd>self のそれぞれの要素に value の要素を引数としてメッセージ (+=) を送ります。
+  <dt>(-=)(value)
+  <dd>self のそれぞれの要素に value の要素を引数としてメッセージ (-=) を送ります。
+  <dt>(*=)(value)
+  <dd>self のそれぞれの要素に value の要素を引数としてメッセージ (*=) を送ります。
+  <dt>(/=)(value)
+  <dd>self のそれぞれの要素に value の要素を引数としてメッセージ (/=) を送ります。
+  <dt>(**=)(value)
+  <dd>self のそれぞれの要素に value の要素を引数としてメッセージ (**=) を送ります。
+</dl>
+<p>
+メソッドの定義は、初期化ファイル群の中の methods.cy にあります。
+</p>
+
+</body>
+</html>
+

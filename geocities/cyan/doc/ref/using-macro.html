@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>マクロの使用法</title>
+</head>
+<body>
+
+<h1>マクロの使用法</h1>
+<p>
+Cyan のマクロは単なるパターンマッチングではありません。
+Cyan におけるマクロは、Lisp のマクロと同等のパワーを持ちます。
+通常は準クオートを使って記述しますが、それにとらわれない柔軟な記述が可能です。
+</p>
+<p>
+マクロが呼び出される際、引数は評価されずにそのまま渡されます。
+そして、その実行結果が呼び出し元に挿入され、もう一度評価されます。
+結果的に、マクロはコードの置き換えを行っていることになります。
+</p>
+<p>
+ここでは、実際にマクロの定義を見ていき、マクロの使用法について説明します。
+</p>
+
+<h2>通常のマクロ</h2>
+<p>
+まずは、準クオートを使った単純な置き換えです。下のコードを見てください。
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+mac(while)^(test, body):
+  `loop:
+    if(!?test): break()
+    begin(?body)
+</pre></td></tr></table>
+<p>
+これは、初期化ファイル群の中の control.cy にある、while マクロの定義です。
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+while(i &lt; 10):
+  say(i)
+  i++
+</pre></td></tr></table>
+<p>
+というコードを、
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+loop:
+  if(!(i &lt; 10)): break()
+  begin:
+    say(i)
+    i++
+</pre></td></tr></table>
+<p>
+に置き換えていると考えることができます。
+この場合、展開後のコードをそのまま記述して準クオートし、
+そのうち引数で与えられた部分をアンクオートすればマクロの完成です。
+展開後のコードの形が見えるので、マクロの動作がわかりやすいのが特徴です。
+</p>
+
+<h2>条件によって変わるマクロ</h2>
+<p>
+次は、条件によって生成されるコードが変わるマクロです。
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+mac(def)^(name, func):
+  if(name.parent == Messenger):
+    `(?name = method(?func))
+   else:
+    `(?name = ?func)
+</pre></td></tr></table>
+<p>
+これは、初期化ファイル群の中の definition.cy にある、def マクロの定義です。
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+def(f)^(x, y):
+  say(x + y)
+
+def(A.g)^(x):
+  say(x ** 2)
+</pre></td></tr></table>
+<p>
+といったコードを、
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+f = ^(x, y):
+  say(x + y)
+
+A.g = method^(x):
+  say(x ** 2)
+</pre></td></tr></table>
+<p>
+というように置き換えます。
+マクロの本体は関数であるため、このように通常の関数と同じような処理が書けます。
+</p>
+
+<h2>複雑なマクロ</h2>
+<p>
+次は、準クオート以外の表現を使ったマクロです。
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+mac(class)^(name, func):
+  parent := []
+  if(func.params.required.null?()):
+    parent = 'Object
+   else:
+    parent = func.params[0]
+  list := func.body.list.map^(exp):
+    given(exp.parent):
+      when(Porter):
+        if(exp.callee == 'def || exp.callee == 'mac):
+          update!(exp.args.list)^(arg_list):
+            [Messenger.new(name, arg_list.car()) | arg_list.cdr()]
+      when(Messenger):
+        if(exp.message == ('x.(=)).message):
+          exp.receiver = Quote.new(Messenger.new(name, exp.receiver.value))
+    exp
+  `begin:
+    ?name = (?parent).child()
+    ?*list
+</pre></td></tr></table>
+<p>
+これは、初期化ファイル群の中の class.cy にある、class マクロの定義です。
+使い方は、
+<a href="globals.html#class">class.cy におけるグローバル変数の説明</a>や、
+サンプルを見てください。
+</p>
+<p>
+ここでは、与えられた関数のブロックに対し、それぞれの式を map メソッドで
+加工しています。
+その後、スプライシングを使って、式のリストをブロックにつなぎ合わせています。
+</p>
+<p>
+一見複雑そうに見えますが、書くのにはほとんど苦労していません。
+加工前のコードと加工後のコードを見比べながら見ていくと、
+やっていることもさほど難しくありません。
+ただ、これだけを見て内容を理解するのは難しいかもしれません。
+</p>
+
+<h2>再帰的なマクロ</h2>
+<p>
+最後に、マクロと関数を組み合わせたものを紹介します。
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+mac(cond)^(body):
+  `begin:
+    else := true
+    ?cond_body(body.list)
+
+def(cond_body)^(list):
+  if(list.null?()):
+    []
+   else:
+    exp := list.car()
+    `if(?exp.callee):
+      begin(?exp.args.list.car())
+     else:
+      ?cond_body(list.cdr())
+</pre></td></tr></table>
+<p>
+これは、初期化ファイル群の中の control.cy にある、cond マクロの定義です。
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+cond:
+  (x > 0):
+    say("x > 0")
+  (x &lt; 0):
+    say("x &lt; ")
+  else:
+    say("x == 0")
+</pre></td></tr></table>
+<p>
+というコードを、
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+begin:
+  else := true
+  if(x > 0):
+    begin:
+      say("x > 0")
+   else:
+    if(x &lt; 0):
+      begin:
+        say("x &lt; 0")
+     else:
+      if(else):
+        begin:
+          say("x == 0")
+       else:
+        []
+</pre></td></tr></table>
+<p>
+に置き換えます。
+再帰的な処理を伴うため、コードの作成を別の関数に任せ、
+再帰を用いて記述しています。
+</p>
+<p>
+このように、Cyan のマクロは、
+様々なテクニックを駆使して柔軟に記述することができます。
+可視性が低くなることがあるので、過度な使用は避けるべきですが、
+とても強力な機能であることは確かです。
+</p>
+
+</body>
+</html>
+

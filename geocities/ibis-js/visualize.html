@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <title>Ibis : Visualized type inferer using slideshow</title>
+  <script type="text/javascript" src="lib/jquery-1_5/jquery-1.5.min.js"></script>
+  <script type="text/javascript" src="lib/jquery_terminal-0_3_3/jquery.terminal-0.3.3.min.js"></script>
+  <script type="text/javascript" src="src/ibis.js"></script>
+  <script type="text/javascript" src="src/stream.js"></script>
+  <script type="text/javascript" src="src/lexer.js"></script>
+  <script type="text/javascript" src="src/expr.js"></script>
+  <script type="text/javascript" src="src/value.js"></script>
+  <script type="text/javascript" src="src/parser.js"></script>
+  <script type="text/javascript" src="src/env.js"></script>
+  <script type="text/javascript" src="src/type.js"></script>
+  <script type="text/javascript" src="src/inferer.js"></script>
+  <script type="text/javascript" src="src/eva.js"></script>
+  <script type="text/javascript" src="src/compat.js"></script>
+  <script type="text/javascript" src="src/default.js"></script>
+  <script type="text/javascript" src="src/visualize.js"></script>
+  <link rel="stylesheet" href="lib/jquery_terminal-0_3_3/jquery.terminal.css" />
+  <link rel="stylesheet" href="src/visualize.css" />
+</head>
+<body>
+  <div id="container">
+    <h1>Ibis : Visualized type inferer using slideshow</h1>
+    <fieldset id="interpreter">
+      <legend>Interpreter</legend>
+      <label for="control">Control</label>
+      <div id="control">
+        <input type="button" id="interpret" value="interpret" />
+        <input type="button" id="clear" value="clear" />
+        <input type="button" id="factorial" value="factorial" />
+        <input type="button" id="fizzbuzz" value="fizzbuzz" />
+        <input type="button" id="peano" value="peano" />
+      </div>
+      <label for="edit">Edit</label>
+      <textarea id="edit" cols="70" rows="20"></textarea>
+      <label for="result">Result</label>
+      <textarea id="result" cols="70" rows="20" readonly="readonly"></textarea>
+    </fieldset>
+    <fieldset id="slideshow">
+      <legend>Slideshow</legend>
+      <label for="expression">Expression</label>
+      <div id="expression">
+        <input type="button" class="first" value="first" disabled="disabled"/>
+        <input type="button" class="prev" value="prev" disabled="disabled" />
+        <input type="button" class="next" value="next" disabled="disabled" />
+        <input type="button" class="last" value="last" disabled="disabled" />
+      </div>
+      <label for="inference">Inference</label>
+      <div id="inference">
+        <input type="button" class="first" value="first" disabled="disabled"/>
+        <input type="button" class="prev" value="prev" disabled="disabled" />
+        <input type="button" class="next" value="next" disabled="disabled" />
+        <input type="button" class="last" value="last" disabled="disabled" />
+      </div>
+      <label for="screen">Screen</label>
+      <textarea id="screen" cols="70" rows="20" readonly="readonly"></textarea>
+    </fieldset>
+  </div>
+</body>
+</html>

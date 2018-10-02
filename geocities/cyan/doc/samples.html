@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>サンプルについて</title>
+</head>
+<body>
+
+<h1>サンプルについて</h1>
+<p>
+ここでは、サンプルフォルダに含まれるコードについて説明します。
+サンプルコードは、
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+$ cyan sample/[ファイル名]
+</pre></td></tr></table>
+のようにして実行できます。
+<p>
+また、Cyan の基本的な機能を使用したテストコードが bin フォルダにあるので、
+参考にしてください。
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+$ cyan test.cy
+</pre></td></tr></table>
+で実行できます。
+
+<h2>bank-account.cy</h2>
+<p>
+このコードは、「<a href="http://sumim.no-ip.com:8080/wiki">
+Wiki っぽい場(あるいは 疑似脳内ネットワーク)</a>」にある、
+BankAccount という問題を Cyan で解いたものです。
+BankAccount はオブジェクト指向言語における力試し的なコードで、
+オブジェクト指向に必要とされる要素が詰め込まれています。
+</p>
+<p>
+Cyan の場合、ゲッターとセッターが存在しないために支障が出ています。
+BankAccount のスロット dollars には値がそのまま入っていますが、
+StockAccount の場合 dollars はメソッドでなくてはならず、
+その２つの呼び出し方が異なる Cyan では、
+StockAccount に BankAccount のメソッドが使えません。
+この問題の解決策として、bank-account2.cy があります。
+</p>
+
+<h2>bank-account2.cy</h2>
+<p>
+bank-account.cy における問題の解決策です。
+ゲッターとセッターに Indexer を用いることで、
+StockAccount に BankAccount のメソッドが使えるようになっています。
+</p>
+
+<h2>coroutine.cy</h2>
+<p>
+coroutine とは、caller と callee の関係が存在せず、
+実行を途中で中断・再開ができるルーチンです。
+</p>
+<p>
+実装には変数 return が使用されており、継続の呼び出しが行われています。
+Cyan のクラスは擬似クラスなので少し冗長な部分がありますが、
+継続の使用例として特徴のあるコードです。
+</p>
+
+<h2>semi-coroutine.cy</h2>
+<p>
+semi-coroutine には caller と callee の関係が存在しますが、
+coroutine と同様に実行の中断と再開ができます。
+</p>
+<p>
+これらのコードは、「<a href="http://d.hatena.ne.jp/ku-ma-me/20070807/p1">
+callcc と coroutine と semi-coroutine</a>」にある、
+Ruby で書かれた coroutine と semi-coroutine をもとにしました。
+</p>
+
+<h2>fizzbuzz.cy</h2>
+<p>
+semi-coroutine の使用例です。1 から 100 までの数字を出力しますが、
+3 の倍数の時は Fizz, 5 の倍数の時は Buzz,
+ 15 の倍数の時は FizzBuzz と代わりに出力します。この例では、剰余を用いずに、
+SemiCoroutine の実行を繰り返すことで実現しています。
+</p>
+
+<h2>title.cy</h2>
+<p>
+coroutine の使用例です。一見何を出力するか分かりませんが、
+実行してみれば分かります。
+</p>
+
+<h2>hanoi.cy</h2>
+<p>
+ハノイの塔のプログラムです。特筆すべきことはありません。
+</p>
+
+<h2>lexer.cy</h2>
+<p>
+Cyan のスキャナを Cyan で実装しました。
+インデントブロックについては、パーザでの操作が必要なのでうまく解析できませんが、
+それ以外のトークンはすべて認識できます。標準入力から読み取るので、
+リダイレクトを使ってファイルを指定してください。
+</p>
+
+<h2>qsort.cy</h2>
+<p>
+クイックソートのシンプルな実装です。
+</p>
+
+<h2>qsort2.cy</h2>
+<p>
+クイックソートの実装です。こちらは、リストを走査する回数が抑えられています。
+</p>
+
+<h2>qsort3.cy</h2>
+<p>
+qsort2.cy のブロックをすべてブレース形式に書き直したものです。
+</p>
+
+</body>
+</html>
+

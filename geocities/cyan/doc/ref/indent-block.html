@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>インデントブロック</title>
+</head>
+<body>
+
+<h1>インデントブロック</h1>
+<p>
+Cyan においては、インデントによってブロックを表現することができます。
+その前に、porter と messenger におけるブロック引数について紹介します。
+</p>
+<p>
+porter と messenger の引数を指定する際に、ブロックと関数の場合は
+引数の括弧の後に記述することができます。具体的には、次のようになります。
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+# func1(1, 2, { say("func1") }) と等価
+func1(1, 2){
+  say("func1")
+}
+
+# func2(2, 3, ^(x, y){ say("func2") }) と等価
+func2(2, 3)^(x, y){
+  say("func2")
+}
+</pre></td></tr></table>
+<p>
+引数がブロックや関数以外にない場合、引数の括弧は省略できます。
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+# func3({ say("func3") }) と等価
+func3{
+  say("func3")
+}
+
+# func4(^(x){ say("func4") }) と等価
+func4^(x){
+  say("func4")
+}
+</pre></td></tr></table>
+<p>
+さらに、間にシンボルをはさむことで、
+複数のブロックや関数を引数として指定できます。
+この場合、それらはキーワード引数となります。
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+# func5(1, 2, { say("func5") }, :sym1 { a }, :sym2 ^(x){ x }) と等価
+func5(1, 2){
+  say("func5")
+}sym1{
+  a
+}sym2^(x){
+  x
+}
+</pre></td></tr></table>
+<p>
+さて、ここでインデントブロックについて説明しましょう。
+Cyan において、インデントは重要な意味を持ちます。
+</p>
+<p>
+式の途中で改行し、インデントして続きを書くと、
+それらは一続きの式として認識されます。
+改行は、前の式の先頭に揃えて式を書いた場合に挿入されます。
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+x = 1 + 2
+ + 3 +
+  4 + 5
+ + 6
+say(x)  #=> 21
+</pre></td></tr></table>
+<p>
+しかし、関数を記述する際の仮引数の後や、
+porter や messenger の引数の後にコロン（:）をおくと、
+次に現れた式の先頭が改行を挿入するための目印になります。
+つまり、その式の先頭に揃えて次の式を書けば、改行が挿入されるのです。
+また、もし次の式がその先頭より前に現れた場合、
+特殊なトークン End が挿入されます。
+それでは、改行を表すトークンをセミコロン（;）として、
+式がどのように解析されるか見てみましょう。
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+func6(1, 2):
+  say("func6")
+  say("func6")
+say("func6")
+</pre></td></tr></table>
+<p>
+上のコードは、次のように解析されます。
+</p>
+<table><tr><td>&nbsp;</td><td><p>
+func6 ( 1 , 2 ) : say ( "func6" ) ; say ( "func6" ) End ;
+say ( "func6" )
+</p></td></tr></table>
+<p>
+ここで、コロンは { と、End は } と等価なので、それぞれ置き換えてみましょう。
+</p>
+<table><tr><td>&nbsp;</td><td><p>
+func6 ( 1 , 2 ) { say ( "func6" ) ; say ( "func6" ) } ;
+say ( "func6" )
+</p></td></tr></table>
+<p>
+これは、次のコードを解析した結果と同じです。
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+func6(1, 2){
+  say("func6")
+  say("func6")
+}
+say("func6")
+</pre></td></tr></table>
+<p>
+このようにして、Cyan ではインデントによってブロックを表現できるのです。
+また、次のような書き方もできます。
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+if(x == 0):
+  say("x == 0")
+ else:
+  say("x != 0")
+</pre></td></tr></table>
+<p>
+これは、
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+if(x == 0){
+  say("x == 0")
+}else{
+  say("x != 0")
+}
+</pre></td></tr></table>
+<p>
+と等価です。
+</p>
+<p>
+実は、ブレースを用いたブロックにおいてもインデントは考慮されており、
+インデントが失われた場合そのままでは実行できません。
+しかし、開始と終端が明示されているため、復元は可能です。
+<p>
+Cyan にインデントブロックを導入したのは、私がそう書きたかったからです。
+ブレースも end も嫌いではないですが、連続して現れているのを見るのは
+あまり好きではありません。
+特に関数型言語的に書こうと（ブロックに１つの式しか書かないように）すると、
+ネストが深くなればなるほど大量の終端子が現れます。
+</p>
+<p>
+その例は、サンプルフォルダ内の qsort3.cy にあります。
+かなり極端な例ではありますが。
+</p>
+
+</body>
+</html>
+

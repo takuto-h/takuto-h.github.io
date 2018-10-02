@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>リスト</title>
+</head>
+<body>
+
+<h1>リスト</h1>
+<p>
+[1, 2, 3] や [4 | 5] など、複数の要素を格納するオブジェクトです。
+評価すると、すべての要素を評価した新しいリストを返します。
+</p>
+<p>
+リストは pair と nil に分けられます。
+pair は２つの要素を持ち、[car | cdr] のように記述します。
+nil は要素を持たず、[] と書きます。
+[1, 2, 3] は、[1 | [2 | [3 | []]]] の省略記法です。
+</p>
+
+<h2>ペアレント</h2>
+<p>
+pair のペアレントは Pair, nil のペアレントは List
+</p>
+
+<h2>メソッド（Pair）</h2>
+<dl>
+  <dt>car()
+  <dd>self の car を返します。
+  <dt>cdr()
+  <dd>self の cdr を返します。
+</dl>
+<p>
+その他のメソッドの定義は、初期化ファイル群の中の list.cy にあります。
+</p>
+
+</body>
+</html>
+

@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Cyan クイックチュートリアル</title>
+</head>
+<body>
+
+<h1>Cyan クイックチュートリアル</h1>
+
+<dl>
+<dt>変数
+<dd><pre>
+x = 1 + 1
+say x  #=> 2
+</pre>
+
+<dt>多重代入
+<dd><pre>
+$(a, b) = &(1, 2)
+say a  #=> 1
+say b  #=> 2
+$(a, b) = &(b, a)
+say a  #=> 2
+say b  #=> 1
+</pre>
+
+<dt>リスト
+<dd><pre>
+lst = [1, 2, 3 | 4]
+say lst.car()  #=> 1
+say lst.cdr()  #=> [2, 3 | 4]
+say lst.cdr().cdr().cdr()  #=> 4
+</pre>
+
+<dt>ハッシュ
+<dd><pre>
+place = %{ "Mt. Fuji" => "Shizuoka", "Mt. Aso" => "Kumamoto" }
+say place["Mt. Fuji"]  #=> Shizuoka
+say place["Mt. Aso"]  #=> Kumamoto
+</pre>
+
+<dt>ブロック
+<dd><pre>
+n = 0
+if(n == 0):
+  n++
+ else:
+  n--
+say n  #=> 1
+</pre>
+
+<dt>無名関数
+<dd><pre>
+fn = ^(x): say x
+fn("foo")  #=> foo
+lst = [1, 2, 3].map^(x): x ** 2
+say lst  #=> [1, 4, 9]
+</pre>
+
+<dt>messenger
+<dd><pre>
+messenger = '(1 + 2)
+say messenger  #=> 1.(+)(2)
+say messenger.receiver  #=> 1
+say messenger.message  #=> (+)
+say messenger.args  #=> &(2)
+</pre>
+
+<dt>expander
+<dd><pre>
+say &(1, *[2, 3], *%{ 'a => 4 }, *&(5, :b 6))  #=> &(1, 2, 3, 5, :a 4, :b 6)
+
+※ :a, :b の順序は未定義
+</pre>
+
+<dt>準クオート
+<dd><pre>
+recv = 2
+args = &({ say "meow" })
+say `(?recv).times(?*args)  #=> 2.times({ say("meow") })
+</pre>
+
+<dt>マクロ
+<dd><pre>
+say until  #=> macro^(test, body){ `while((?test)(!@)(), { begin(?body) }) }
+sum = i = 0
+until(i > 10):
+  sum += i
+  i++
+say sum  #=> 55
+</pre>
+
+<dt>継続
+<dd><pre>
+2 * callcc^(x): cont = x; 2
+say cont(5)  #=> 10
+</pre>
+</dl>
+
+</body>
+</html>
+

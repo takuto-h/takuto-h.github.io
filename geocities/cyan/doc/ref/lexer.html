@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>字句構造</title>
+</head>
+<body>
+
+<h1>字句構造</h1>
+<ul>
+  <li>予約語
+  <p>Cyan に予約語はありません。</p>
+  <li>コメント
+  <ul>
+    <li>単一行コメント
+    <p># から行末までがコメントです。</p>
+
+<table><tr><td>&nbsp;</td><td><pre>
+# This is a comment.
+</pre></td></tr></table>
+
+    </li>
+    <li>複数行コメント
+    <p>#| から |# までがコメントです。ネストさせることが可能です。</p>
+
+<table><tr><td>&nbsp;</td><td><pre>
+#|
+  #|
+    This is a comment.
+  |#
+|#
+</pre></td></tr></table>
+
+    </li>
+  </ul>
+  </li>
+  <li>改行
+  <p>セミコロン（;）は改行として扱われます。</p>
+</ul>
+
+</body>
+</html>
+

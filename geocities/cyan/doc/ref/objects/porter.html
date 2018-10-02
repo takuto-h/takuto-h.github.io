@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>porter</title>
+</head>
+<body>
+
+<h1>porter</h1>
+<p>
+func(1, 2, :z 3) のように記述する、関数などの呼び出しが可能なオブジェクトを
+呼び出すためのオブジェクトです。
+他の文法と衝突しなければ、func 1, 2, :z 3 のように括弧を省略することができます。
+評価すると、args を引数として callee を呼び出し、その結果を返します。
+</p>
+<p>
+'func(1, 2, :z 3) のように記述すると、スロット callee に func が、
+スロット args に &(1, 2, :z 3) がセットされた porter を得ることができます。
+</p>
+<p>
+porter には、ブロックや関数を引数として指定するのに便利な構文があります。
+詳しくは、<a href="../indent-block.html">インデントブロック</a>
+の項を見てください。
+</p>
+
+<h2>ペアレント</h2>
+<p>
+Porter
+</p>
+
+<h2>スロット</h2>
+<dl>
+  <dt>callee
+  <dd>評価時に呼び出されるオブジェクトです。
+  <dt>args
+  <dd>評価時に callee に引数として与えられるオブジェクトです。
+</dl>
+
+</body>
+</html>
+

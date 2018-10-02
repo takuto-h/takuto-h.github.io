@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>ハッシュ</title>
+</head>
+<body>
+
+<h1>ハッシュ</h1>
+<p>
+%{ "key" => "value" } のように記述する、ハッシュテーブルを表すオブジェクトです。
+評価すると、すべてのキーと値を評価した新しいハッシュを返します。
+</p>
+
+<h2>ペアレント</h2>
+Hash
+
+<h2>メソッド</h2>
+<dl>
+  <dt>([])(key)
+  <dd>self から key に関連付けられた値を取り出して返します。
+  <dt>([]=)(key, value)
+  <dd>self の key に value を関連付け、value を返します。
+  <dt>keys()
+  <dd>self に含まれるすべてのキーをリストにして返します。
+</dl>
+<p>
+その他のメソッドの定義は、初期化ファイル群の中の methods.cy にあります。
+</p>
+
+</body>
+</html>
+

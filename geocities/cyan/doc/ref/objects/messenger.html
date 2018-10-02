@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>messenger</title>
+</head>
+<body>
+
+<h1>messenger</h1>
+<p>
+obj.slot_name や recv.msg(1, 2, :a 3) のように記述する、
+オブジェクトのスロットにアクセスしたり
+メッセージ送ったりするためのオブジェクトです。
+評価すると、args が指定されていなければ receiver の message というスロットに
+アクセスし、指定されていれば receiver に args を引数として message を送り、
+その結果を返します。
+</p>
+<p>
+'obj.slot_name のように記述すると、スロット receiver に obj が、
+スロット message に slot_name がセットされた messenger を、
+'recv.msg(1, 2, :a 3) のように記述すると、スロット receiver に recv が、
+スロット message に msg が、スロット args に &(1, 2, :a 3) がセットされた
+ messenger を得ることができます。
+</p>
+<p>
+self.slot_name や self.msg(arg) のように、レシーバがシンボルの self である場合、
+.slot_name や .msg(arg) といったように、self を省略することができます。
+</p>
+<p>
+messenger には、ブロックや関数を引数として指定するのに便利な構文があります。
+詳しくは、<a href="../indent-block.html">インデントブロック</a>
+の項を見てください。
+</p>
+
+<h2>ペアレント</h2>
+<p>
+Messenger
+</p>
+
+<h2>スロット</h2>
+<dl>
+  <dt>receiver
+  <dd>レシーバとして使用されるオブジェクトです。
+  <dt>message
+  <dd>メッセージとして使用されるシンボルです。
+  <dt>args
+  <dd>メッセージを送る際に引数として与えられるオブジェクトです。
+</dl>
+
+<h2>メソッド</h2>
+<dl>
+  <dt>(=)(value)
+  <dd>self が指し示すオブジェクトのスロットに value を代入し、value を返します。
+      args が指定されていた場合エラーです。
+</dl>
+<p>
+その他のメソッドの定義は、初期化ファイル群の中の methods.cy にあります。
+</p>
+
+</body>
+</html>
+

@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>expander</title>
+</head>
+<body>
+
+<h1>expander</h1>
+<p>
+あるオブジェクトを展開させるためのオブジェクトです。
+*value のように記述します。
+評価すると、スロット value を評価した新しい expander を返します。
+</p>
+<p>
+expander は、リストと引数において使用されます。下に例を挙げます。
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+list = [2, 3]
+say([1, 2, *list])  #=> [1, 2, 2, 3]
+
+hash = %{ 'b => 4, 'c => 5 }
+args = &(3, :d 1)
+say(&(1, :a 2, *list, *hash, *args))  #=> &(1, 2, 3, 3, :a 2, :b 4, :c 5, :d 1)
+
+# キーワード引数の順序は未定義
+</pre></td></tr></table>
+
+<h2>ペアレント</h2>
+Expander
+
+<h2>スロット</h2>
+<dl>
+  <dt>value
+  <dd>展開されるオブジェクトです。
+</dl>
+
+</body>
+</html>
+

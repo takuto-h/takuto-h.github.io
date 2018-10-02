@@ -1,0 +1,274 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>グローバル変数</title>
+</head>
+<body>
+
+<h1>グローバル変数</h1>
+<ul>
+  <li><a href="globals.html#core_variable">組み込み変数</a>
+  <li><a href="globals.html#core_function">組み込み関数</a>
+  <li><a href="globals.html#core_macro">組み込みマクロ</a>
+  <li><a href="globals.html#variable">初期化時に定義される変数</a>
+  <li><a href="globals.html#function_macro">初期化時に定義される関数・マクロ</a>
+  <ul>
+    <li><a href="globals.html#definition">definition.cy</a>
+    <li><a href="globals.html#control">control.cy</a>
+    <li><a href="globals.html#anaphoric">anaphoric.cy</a>
+    <li><a href="globals.html#assignments">assignments.cy</a>
+    <li><a href="globals.html#primitive">primitive.cy</a>
+    <li><a href="globals.html#list">list.cy</a>
+    <li><a href="globals.html#class">class.cy</a>
+  </ul>
+  </li>
+</ul>
+
+<h2><a name="core_variable">組み込み変数</a></h2>
+<ul>
+  <li>Arguments
+  <li>Block
+  <li>Bool
+  <li>Continuation
+  <li>Expander
+  <li>Function
+  <li>Hash
+  <li>Indexer
+  <li>Int
+  <li>List
+  <li>Macro
+  <li>Messenger
+  <li>Object
+  <li>Pair
+  <li>Parameters
+  <li>Porter
+  <li>Quasiquote
+  <li>Quote
+  <li>Stream
+  <li>String
+  <li>Symbol
+  <li>Unquote
+  <li>true
+  <li>false
+</ul>
+<dl>
+  <dt>stdin
+  <dd>標準入力を表す読み取り専用のストリーム
+  <dt>stdout
+  <dd>標準出力を表す書き込み専用のストリーム
+  <dt>stderr
+  <dd>標準エラー出力を表す書き込み専用のストリーム
+</dl>
+<dl>
+  <dt>ARGS
+  <dd>与えられた引数のリスト
+  <dt>__FILE__
+  <dd>現在読み込んでいるファイル名
+  <dt>PROGRAM_NAME
+  <dd>プログラムとして実行しているファイル名
+  <dt>LOAD_PATH
+  <dd>ファイルをロードする際に参照するパスのリスト
+</dl>
+
+<h2><a name="core_function">組み込み関数</a></h2>
+<dl>
+  <dt>begin(body)
+  <dd>body がブロックならその式を順に実行し、それ以外なら評価した値を返します。
+  <dt>if(cond, then, &key else)
+  <dd>cond が真なら then を、偽なら else を実行します。
+  <dt>exit()
+  <dd>プログラムを終了します。
+  <dt>say(obj)
+  <dd>標準出力に obj を文字列化したものを書き込み、改行を付加します。
+  <dt>print(obj)
+  <dd>標準出力に obj を文字列化したものを書き込みます。
+  <dt>hear()
+  <dd>標準入力から１行読み取ります。改行は含まれません。
+  <dt>load(fname)
+  <dd>fname という名前のファイルを Cyan のプログラムとして読み込みます。
+  <dt>cons(obj1, obj2)
+  <dd>obj1 を car, obj2 を cdr とするリストを返します。
+</dl>
+
+<h2><a name="core_macro">組み込みマクロ</a></h2>
+<dl>
+  <dt>given(body)
+  <dd>下記のように使います。
+<pre>
+given(x):
+  when(1, 2, 3):
+    say("x == 1 or 2 or 3")
+  when(4, 5):
+    say("x == 4 or 5")
+  default:
+    say("x == unknown")
+</pre>
+もともとは初期化ファイル群の中の control.cy で定義されていましたが、
+展開に時間がかかりすぎていたため、組み込みのマクロにしました。
+</dl>
+
+<h2><a name="variable">初期化時に定義される変数</a></h2>
+<dl>
+  <dt>LOADED_FILES
+  <dd>require で読み込んだファイル名のリスト
+</dl>
+
+<h2><a name="function_macro">初期化時に定義される関数・マクロ</a></h2>
+
+<h3><a name="definition">definition.cy</a></h3>
+
+<h4>関数</h4>
+<dl>
+  <dt>macro(func)
+  <dd>スロット func に func を持つマクロを返します。
+  <dt>method(func)
+  <dd>func の第一仮引数に self を追加した関数を返します。
+</dl>
+
+<h4>マクロ</h4>
+<dl>
+  <dt>mac(name, func)
+  <dd>name が messenger ならば func をマクロメソッドとして、
+      それ以外ならばマクロとして name に代入します。
+  <dt>def(name, func)
+  <dd>name が messenger ならば func をメソッドとして、
+      それ以外ならば関数として name に代入します。
+</dl>
+
+<h3><a name="control">control.cy</a></h3>
+
+<h4>関数</h4>
+<dl>
+  <dt>unless(cond, body)
+  <dd>cond が偽なら body を実行します。
+</dl>
+
+<h4>マクロ</h4>
+<dl>
+  <dt>loop(body)
+  <dd>body の実行を繰り返します。break と continue が使えます。
+  <dt>while(test, body)
+  <dd>test が真の間、body の実行を繰り返します。
+  <dt>until(test, body)
+  <dd>test が偽の間、body の実行を繰り返します。
+  <dt>for(init, test, step, body)
+  <dd>init を評価し、test が真の間 body の実行を繰り返します。
+      実行が終わるごとに step を評価します。
+  <dt>cond(body)
+  <dd>下記のように使います。
+<pre>
+cond:
+  (x > 0):
+    say("x > 0")
+  (x &lt; 0):
+    say("x &lt; 0")
+  else:
+    say("x == 0")
+</pre>
+</dl>
+
+<h3><a name="anaphoric">anaphoric.cy</a></h3>
+
+<h4>マクロ</h4>
+<dl>
+  <dt>aif(cond, then, &key else)
+  <dd>変数 it に cond を代入する以外は if と等価です。
+  <dt>awhile(test, body)
+  <dd>変数 it に test を代入する以外は while と等価です。
+  <dt>alambda(func)
+  <dd>変数 self に func を代入し、func を返します。
+</dl>
+
+<h3><a name="assignments">assignments.cy</a></h3>
+
+<h4>マクロ</h4>
+<dl>
+  <dt>update!(target, func)
+  <dd>target に func(target) を代入します。
+  <dt>push!(target, obj)
+  <dd>target に [obj | target] を代入します。
+  <dt>pop!(target)
+  <dd>target に target.cdr() を代入し、代入前の target.car() を返します。
+</dl>
+
+<h3><a name="primitive">primitive.cy</a></h3>
+
+<h4>関数</h4>
+<dl>
+  <dt>callcc(func)
+  <dd>func に return を渡します。
+  <dt>do(body, &key where = {})
+  <dd>where を実行後 body を実行します。
+  <dt>compose(fn1, fn2)
+  <dd>fn1 と fn2 を合成します。
+  <dt>complement(fn)
+  <dd>fn のコンプリメント関数を返します。
+  <dt>require(fname)
+  <dd>fname という名前のファイルをロードします。
+      一度ロードしたファイルはその後ロードしません。
+  <dt>error(output)
+  <dd>エラー出力に output を書き込み、exit を呼び出します。
+</dl>
+
+<h4>マクロ</h4>
+<dl>
+  <dt>let(obj, &opt func)
+  <dd>下記のように使います。
+<pre>
+let^(&opt a = 1, b = 2):
+  say(a + b)
+
+let(loop)^(&opt lst = [1, 2, 3]):
+  unless(lst.null?()):
+    say(lst.car())
+    loop(lst.cdr())
+</pre>
+二つ目の例は、scheme の named let に当たります。
+</dl>
+
+<h3><a name="list">list.cy</a></h3>
+
+<h4>関数</h4>
+<dl>
+  <dt>iota(count, &opt start = 0, step = 1)
+  <dd>start から step ずつ加算された count 個の要素を持つリストを返します。
+</dl>
+
+<h3><a name="class">class.cy</a></h3>
+
+<h4>マクロ</h4>
+<dl>
+  <dt>class(name, func)
+  <dd>name という名前のクラスを定義します。
+<pre>
+# 例
+class(A)^(B):
+  c = 0
+  def(init)^:
+    .d = 0
+  def(f)^(x):
+    .parent.c -= x
+    .d += x
+  def(g)^:
+    &(.parent.c, .d)
+
+# 上のコードは、次のコードと等価です。
+begin:
+  A = B.child()
+  A.c = 0
+  def(A.init)^:
+    .d = 0
+  def(A.f)^(x):
+    .parent.c -= x
+    .d += x
+  def(A.g)^:
+    &(.parent.c, .d)
+</pre>
+クラスの使用法については、
+<a href="pseudo-classes.html">擬似クラス</a>の項を見てください。
+</dl>
+
+</body>
+</html>
+

@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>準クオート</title>
+</head>
+<body>
+
+<h1>準クオート</h1>
+<p>
+オブジェクトの一部だけを評価したものを得るために使用するオブジェクトです。
+`value のように記述します。
+評価すると、スロット value にセットされたオブジェクトの中から、
+再帰的にアンクオートされたオブジェクトを探しだし、
+その部分を評価したオブジェクトを返します。
+</p>
+<p>
+準クオートは、コードの生成において使用すると便利です。下に例を挙げます。
+</p>
+<table><tr><td>&nbsp;</td><td><pre>
+# 準クオートされたブロック内で ?*list とすると、list がスプライシングされます。
+
+cond = '(x == 0)
+then = '[say("x == 0")]
+else = '[say("x != 0"), false]
+code = `if(?cond){ ?*then; true }else{ ?*else }
+
+say(code)
+ #=> if(x.(==)(0), { say("x == 0"); true }, :else { say("x != 0"); false })
+</pre></td></tr></table>
+
+<h2>ペアレント</h2>
+Quasiquote
+
+<h2>スロット</h2>
+<dl>
+  <dt>value
+  <dd>準クオートされたオブジェクトです。
+</dl>
+
+</body>
+</html>
+

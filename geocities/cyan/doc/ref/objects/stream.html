@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>ストリーム</title>
+</head>
+<body>
+
+<h1>ストリーム</h1>
+<p>
+入出力をつかさどるオブジェクトです。評価すると、自身を返します。
+</p>
+
+<h2>ペアレント</h2>
+Stream
+
+<h2>メソッド</h2>
+<dl>
+  <dt>readc()
+  <dd>self から１文字読み取って返します。読み取り位置は１文字分進められます。
+      終端に達していた場合、[] を返します。
+  <dt>peekc()
+  <dd>self から１文字読み取って返します。読み取り位置は変わりません。
+      終端に達していた場合、[] を返します。
+  <dt>readline()
+  <dd>self から１行、改行を含めて読み取ります。
+      終端に達していた場合、[] を返します。
+  <dt>write(obj)
+  <dd>self に obj を文字列化したものを書き込みます。self を返します。
+  <dt>writeline(obj)
+  <dd>self に obj を文字列化したものを書き込み、改行を付加します。
+      self を返します。
+  <dt>to_s()
+  <dd>self を文字列化します。
+      self が文字列から作られた書き込み用のストリームだった場合、
+      書き込んだ文字列を返します。
+</dl>
+
+</body>
+</html>
+
